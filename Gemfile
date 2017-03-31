@@ -9,6 +9,10 @@ end
 ruby '2.3.3' # , :patchlevel => '222'
 # Gem para Heroku
 gem 'rails_12factor'
+#Gema para serializacion
+gem 'active_model_serializers', '~> 0.8.3'
+#Gema para CORS
+gem 'rack-cors', :require => 'rack/cors'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
