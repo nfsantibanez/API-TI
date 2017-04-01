@@ -9,7 +9,7 @@ class UsuariosController < ApplicationController
 
     # POST /usuarios
     def create
-      if params['id']
+      if params["id"]
         json_response({"error": "No se puede crear usuario con id"}, 400)
       elsif params["nombre"] && params["usuario"]
         @usuario = Usuario.create!(usuario_params)
@@ -26,7 +26,7 @@ class UsuariosController < ApplicationController
 
     # PUT /usuarios/:id
     def update
-      if params['id']
+      if "id".in?(params['usuario'].keys)
         json_response({"error": "id no es modificable"}, 400)
       else
         @usuario.update(usuario_params)
