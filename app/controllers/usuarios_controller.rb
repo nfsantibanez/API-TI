@@ -1,51 +1,45 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: [:show, :update, :destroy]
 
-  # GET /usuarios
-  def index
-    @usuarios = Usuario.all
-
-    render json: @usuarios
-  end
-
-  # GET /usuarios/1
-  def show
-    render json: @usuario
-  end
-
-  # POST /usuarios
-  def create
-    @usuario = Usuario.new(usuario_params)
-
-    if @usuario.save
-      render json: @usuario, status: :created, location: @usuario
-    else
-      render json: @usuario.errors, status: :unprocessable_entity
+    # GET /usuarios
+    def index
+      @usuarios = Usuario.all
+      json_response(@usuarios)
     end
-  end
 
-  # PATCH/PUT /usuarios/1
-  def update
-    if @usuario.update(usuario_params)
-      render json: @usuario
-    else
-      render json: @usuario.errors, status: :unprocessable_entity
+    # POST /usuarios
+    def create
+      @usuario = Usuario.create!(usuario_params)
+      json_response(@usuario, :created)
     end
-  end
 
-  # DELETE /usuarios/1
-  def destroy
-    @usuario.destroy
-  end
+    # GET /usuarios/:id
+    def show
+      json_response(@usuario)
+    end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
+    # PUT /usuarios/:id
+    def update
+      @usuario.update(usuario_params)
+      head :no_content
+    end
+
+    # DELETE /usuarios/:id
+    def destroy
+      @usuario.destroy
+      head :no_content
+    end
+
+    private
+
+    def usuario_params
+      # whitelist params
+      params.require(:nombre)
+      params.require(:usuario)
+      params.permit(:apellido, :twitter)
+    end
+
     def set_usuario
       @usuario = Usuario.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def usuario_params
-      params.require(:usuario).permit(:usuario, :nombre, :apellido, :twitter)
     end
 end
