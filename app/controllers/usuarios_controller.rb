@@ -14,7 +14,7 @@ class UsuariosController < ApplicationController
       if params['id']
         json_response({"error": "No se puede crear usuario con id"}, 400)
       elsif params["nombre"] && params["usuario"]
-        json_response(@usuario, 200)
+        json_response(@usuario, :created)
       else
         json_response({"error": "La creación ha fallado"}, 500)
       end
