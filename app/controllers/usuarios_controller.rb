@@ -1,6 +1,5 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: [:show, :update, :destroy]
-  before_action :validate_usuario, only: [:create, :update, :destroy]
 
     # GET /usuarios
     def index
@@ -11,7 +10,14 @@ class UsuariosController < ApplicationController
     # POST /usuarios
     def create
       @usuario = Usuario.create!(usuario_params)
-      json_response(@usuario, :created)
+
+      if params['id']
+        json_response({"error": "No se puede crear usuario con id"}, 400)
+      elsif params["nombre"] && params["usuario"]
+        json_response(@usuario, 200)
+      else
+        json_response({"error": "La creación ha fallado"}, 500)
+      end
     end
 
     # GET /usuarios/:id
@@ -43,4 +49,5 @@ class UsuariosController < ApplicationController
     def set_usuario
       @usuario = Usuario.find(params[:id])
     end
+
 end
